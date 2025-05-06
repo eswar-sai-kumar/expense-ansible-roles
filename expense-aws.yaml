@@ -1,7 +1,7 @@
 - name: create ec2 and r53 records
   hosts: localhost
   vars:
-    zone: daws78s.online
+    zone: eswarsaikumar.site
     instances:
     - db
     - backend
@@ -12,7 +12,7 @@
       instance_type: t2.micro
       name: "{{ item }}"
       security_group: allow-everything #replace with you AWS values
-      image_id: ami-090252cbe067a9e58
+      image_id: ami-09c813fb71547fc4f
       tags:
         Name: "{{ item }}"
     loop: "{{ instances }}"
