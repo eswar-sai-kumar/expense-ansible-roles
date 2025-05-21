@@ -3,7 +3,7 @@
     name: mysql-server
     state: latest
 
-- name: start mysql
+- name: start and enable MySQL server
   ansible.builtin.service:
     name: mysqld
     state: started
@@ -20,16 +20,16 @@
 - name: check db connection
   community.mysql.mysql_info: # ansible community module
     login_user: root
-    login_password: "{{mysql_root_password}}"
-    login_host: "{{login_host}}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: "{{ login_host }}"
     filter: version # it only fetches version from the mysql information, if version came that means password already set 
   ignore_errors: yes # errors will come if password not set yet, so we ignore errors and set up password
   register: mysql_connection_output # saves mysql info here
 
 - name: print output
   ansible.builtin.debug:
-    msg: "output: {{mysql_connection_output}}" 
+    msg: "output: {{ mysql_connection_output }}" 
 
 - name: setup root password
-  ansible.builtin.command: "mysql_secure_installation --set-root-pass {{mysql_root_password}}"
+  ansible.builtin.command: "mysql_secure_installation --set-root-pass {{ mysql_root_password }}"
   when: mysql_connection_output.failed is true  # don't give {{ }} in when conditon
