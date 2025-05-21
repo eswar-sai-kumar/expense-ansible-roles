@@ -3,6 +3,6 @@
   become: yes
   tasks:
   - name: install postfix
-    ansible.buitin.dnf:
+    ansible.builtin.dnf:
       name: postfix
       state: latest
